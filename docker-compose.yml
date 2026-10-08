@@ -1,0 +1,22 @@
+services:
+  nahardrop:
+    build: .
+    container_name: nahardrop
+    restart: unless-stopped
+    # LAN IP auto-detection and the QR code only make sense if the container
+    # can see the host's real network interface. On Linux, `network_mode:
+    # host` gives it that (the "ports:" section below is then ignored - the
+    # server just binds 8000 directly on the host). Docker Desktop on
+    # macOS/Windows does NOT support host networking the same way; in that
+    # case comment out `network_mode: host`, uncomment `ports:`, and set
+    # NAHARDROP_ADVERTISE_IP below to your Mac/PC's actual LAN IP (e.g.
+    # 192.168.1.23) so the QR code points phones at a reachable address
+    # instead of the container's internal one.
+    network_mode: host
+    # ports:
+    #   - "8000:8000"
+    environment:
+      - NAHARDROP_ADVERTISE_IP=
+    volumes:
+      - ./received:/data/received
+      - ./data:/app/data

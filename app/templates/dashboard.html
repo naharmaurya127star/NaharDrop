@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}NaharDrop - Dashboard{% endblock %}
+{% block body %}
+<div class="container">
+  <header class="topbar">
+    <h1>NaharDrop</h1>
+  </header>
+
+  <section class="card">
+    <h2>Connect your phone</h2>
+    <p>Scan this QR code with your phone's camera, or open the link below on the same Wi-Fi network.</p>
+    <img class="qr" src="{{ qr_data_uri }}" alt="QR code for {{ mobile_url }}">
+    <p class="url">{{ mobile_url }}</p>
+    {% if require_pin %}
+    <p class="pin">PIN: <strong>{{ pin }}</strong></p>
+    {% endif %}
+  </section>
+
+  <section class="card">
+    <h2>Send files to your phone</h2>
+    <div id="dropzone" class="dropzone">Drag &amp; drop files here, or click to choose</div>
+    <input id="file-input" type="file" multiple hidden>
+    <ul id="send-list" class="file-list"></ul>
+  </section>
+
+  {% if require_pin %}
+  <section class="card" id="pending-card" hidden>
+    <h2>Device wants to connect</h2>
+    <ul id="pending-list" class="device-list"></ul>
+  </section>
+  {% endif %}
+
+  <section class="card">
+    <h2>Connected devices</h2>
+    <ul id="device-list" class="device-list"><li class="muted">No devices connected yet.</li></ul>
+  </section>
+
+  <section class="card">
+    <h2>Received files</h2>
+    <p class="muted">Saving to: <code>{{ dest_dir }}</code>. Use "Send to phone" to relay a file a phone already sent you (e.g. from Android) back out so another phone (e.g. an iPhone) can download it.</p>
+    <ul id="received-list" class="file-list"></ul>
+  </section>
+
+  <section class="card">
+    <h2>Transfer history</h2>
+    <ul id="history-list" class="file-list"><li class="muted">No transfers yet.</li></ul>
+  </section>
+</div>
+<script src="/static/js/list-diff.js"></script>
+<script src="/static/js/chunked-uploader.js"></script>
+<script src="/static/js/send.js"></script>
+<script src="/static/js/dashboard.js"></script>
+<script src="/static/js/library.js"></script>
+{% endblock %}

@@ -1,0 +1,222 @@
+:root {
+  --bg: #f4f5f7;
+  --card-bg: #ffffff;
+  --text: #1a1c20;
+  --muted: #6b7280;
+  --border: #e3e5e8;
+  --accent: #2563eb;
+  --accent-text: #ffffff;
+  --danger: #dc2626;
+  --success: #16a34a;
+}
+
+:root[data-theme="dark"] {
+  --bg: #14161a;
+  --card-bg: #1d2025;
+  --text: #e7e9ec;
+  --muted: #9aa1ab;
+  --border: #2b2f36;
+  --accent: #3b82f6;
+  --accent-text: #ffffff;
+  --danger: #f87171;
+  --success: #4ade80;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14161a;
+    --card-bg: #1d2025;
+    --text: #e7e9ec;
+    --muted: #9aa1ab;
+    --border: #2b2f36;
+    --accent: #3b82f6;
+    --accent-text: #ffffff;
+    --danger: #f87171;
+    --success: #4ade80;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.15s, color 0.15s;
+}
+
+.theme-toggle-btn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 50;
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+}
+
+.preview-media {
+  display: block;
+  max-width: 100%;
+  max-height: 260px;
+  border-radius: 8px;
+  margin: 8px 0;
+  background: var(--bg);
+}
+
+/* Reserve the poster's aspect ratio up front so a video element doesn't
+   cause the row (and everything below it) to jump once it loads metadata. */
+video.preview-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.container.narrow { max-width: 480px; }
+
+.topbar h1 {
+  font-size: 1.5rem;
+  margin: 12px 0 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.muted { color: var(--muted); }
+
+.qr {
+  display: block;
+  margin: 12px auto;
+  width: 220px;
+  height: 220px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.url { text-align: center; word-break: break-all; }
+.pin { text-align: center; font-size: 1.3rem; }
+
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  padding: 36px 16px;
+  text-align: center;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone.dragover {
+  border-color: var(--accent);
+  background: rgba(37, 99, 235, 0.06);
+}
+
+.file-list, .device-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.file-list li, .device-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.file-list li:last-child, .device-list li:last-child { border-bottom: none; }
+
+.file-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.file-row .name { font-weight: 600; word-break: break-all; }
+.file-row .meta { font-size: 0.85rem; color: var(--muted); }
+
+.progress-track {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  /* Progress updates arrive at most once/sec (throttled in
+     chunked-uploader.js); a longer, linear transition interpolates smoothly
+     between those updates instead of visibly snapping. */
+  transition: width 0.9s linear, background-color 0.2s;
+}
+
+.progress-fill.error { background: var(--danger); }
+.progress-fill.done { background: var(--success); }
+
+.actions { display: flex; gap: 8px; margin-top: 4px; }
+
+button, .btn {
+  font: inherit;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.secondary { background: var(--border); color: var(--text); }
+button.danger { background: var(--danger); color: #fff; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab-btn {
+  flex: 1;
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.tab-btn.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+code {
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+input[type="text"], input:not([type]), #pairing-gate input {
+  display: block;
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+#pairing-gate h2 { margin-top: 0; }
+#pairing-gate #pair-submit-btn { width: 100%; margin-top: 4px; }

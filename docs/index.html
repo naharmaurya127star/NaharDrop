@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NaharDrop</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1a1c20; --muted: #6b7280;
+    --border: #e3e5e8; --accent: #2563eb; --accent-text: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14161a; --card:#1d2025; --text:#e7e9ec; --muted:#9aa1ab; --border:#2b2f36; --accent:#3b82f6; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
+  h1 { font-size: 2.2rem; margin-bottom: 4px; }
+  .tagline { color: var(--muted); margin-top: 0; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin: 20px 0; }
+  .downloads { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; background: var(--accent); color: var(--accent-text);
+    padding: 12px 20px; border-radius: 10px; text-decoration: none; font-weight: 600;
+  }
+  .btn.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  code { background: var(--bg); padding: 2px 6px; border-radius: 4px; }
+  ul { padding-left: 20px; }
+  footer { color: var(--muted); font-size: 0.85rem; margin-top: 40px; text-align: center; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NaharDrop</h1>
+  <p class="tagline">Send files between your phone and laptop over your own Wi-Fi - no cloud, no cables, no account.</p>
+
+  <div class="card">
+    <h2>Download</h2>
+    <p>Grab the latest build for your laptop's OS. No install needed - just run it.</p>
+    <div class="downloads">
+      <a class="btn" href="https://github.com/naharmaurya127star/NaharDrop/releases/latest/download/nahardrop-windows-x64.exe">Windows (.exe)</a>
+      <a class="btn secondary" href="https://github.com/naharmaurya127star/NaharDrop/releases/latest/download/nahardrop-macos-x64">macOS (binary)</a>
+    </div>
+    <p><small>Or see <a href="https://github.com/naharmaurya127star/NaharDrop/releases">all releases</a>. First run on macOS may need "right-click &gt; Open" past Gatekeeper, since the binary isn't signed.</small></p>
+  </div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <ol>
+      <li>Run NaharDrop on your laptop.</li>
+      <li>Scan the QR code it prints with your phone's camera (same Wi-Fi network).</li>
+      <li>Approve the device on your laptop when prompted.</li>
+      <li>Drag files onto the dashboard to send them to your phone, or pick files on your phone to send them to your laptop.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Running from source</h2>
+    <p>Prefer Python? Clone the repo and run:</p>
+    <pre><code>pip install -r requirements.txt
+python run.py</code></pre>
+    <p>See the <a href="https://github.com/naharmaurya127star/NaharDrop#readme">README</a> for Docker, firewall tips, and hotspot-mode instructions.</p>
+  </div>
+
+  <footer>NaharDrop runs entirely on your local network. No file ever leaves your Wi-Fi.</footer>
+</div>
+</body>
+</html>

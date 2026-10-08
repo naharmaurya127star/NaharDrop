@@ -1,0 +1,64 @@
+name: Build and release executables
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build exe
+        run: pyinstaller packaging/nahardrop.spec --distpath dist --workpath build --noconfirm
+      - name: Rename artifact
+        run: Copy-Item dist/nahardrop.exe dist/nahardrop-windows-x64.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nahardrop-windows
+          path: dist/nahardrop-windows-x64.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build binary
+        run: pyinstaller packaging/nahardrop.spec --distpath dist --workpath build --noconfirm
+      - name: Rename artifact
+        run: cp dist/nahardrop dist/nahardrop-macos-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nahardrop-macos
+          path: dist/nahardrop-macos-x64
+
+  release:
+    needs: [build-windows, build-macos]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create release and attach binaries
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/nahardrop-windows/nahardrop-windows-x64.exe
+            artifacts/nahardrop-macos/nahardrop-macos-x64
+          generate_release_notes: true

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}NaharDrop{% endblock %}
+{% block body %}
+<div class="container narrow">
+  <header class="topbar">
+    <h1>NaharDrop</h1>
+  </header>
+
+  <section id="pairing-gate" class="card" hidden>
+    <div id="pair-pin-form">
+      <h2>Enter the PIN shown on the laptop</h2>
+      <input id="pair-pin-input" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="off">
+      <input id="pair-device-name" placeholder="This device's name (optional)" autocomplete="off">
+      <button id="pair-submit-btn">Connect</button>
+      <p id="pair-error" class="muted"></p>
+    </div>
+    <div id="pair-waiting" hidden>
+      <h2>Waiting for approval...</h2>
+      <p class="muted">Approve this device on the laptop's dashboard.</p>
+    </div>
+    <div id="pair-denied" hidden>
+      <h2>Not approved</h2>
+      <p class="muted">The laptop denied this device, or the request expired. <button id="pair-retry-btn" class="secondary">Try again</button></p>
+    </div>
+  </section>
+
+  <div id="main-ui" hidden>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="upload">Send to laptop</button>
+      <button class="tab-btn" data-tab="receive">Receive from laptop</button>
+    </nav>
+
+    <section id="tab-upload" class="tab-panel active">
+      <div id="dropzone" class="dropzone">Tap to choose files</div>
+      <input id="file-input" type="file" multiple hidden>
+      <ul id="upload-list" class="file-list"></ul>
+    </section>
+
+    <section id="tab-receive" class="tab-panel">
+      <ul id="incoming-list" class="file-list"><li class="muted">Nothing shared yet.</li></ul>
+    </section>
+  </div>
+</div>
+<script src="/static/js/pair.js"></script>
+<script src="/static/js/list-diff.js"></script>
+<script src="/static/js/chunked-uploader.js"></script>
+<script src="/static/js/upload.js"></script>
+<script src="/static/js/download.js"></script>
+<script src="/static/js/mobile.js"></script>
+{% endblock %}
